@@ -1,0 +1,16 @@
+{
+    "name": "rudloff/mwpackagist",
+    "description": "Install and manage MediaWiki extensions/skins with Composer",
+    "license": "GPL-3.0",
+    "require": {
+        "gilbitron/php-simplecache": "~1.4.1"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "~3.0.6"
+    },
+    "autoload": {
+		"psr-4": {
+			"MWPackagist\\": "classes/"
+		}
+	}
+}
