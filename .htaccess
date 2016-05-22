@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteBase /mw-packagist/
+RewriteRule packages.json packages.php [L]
