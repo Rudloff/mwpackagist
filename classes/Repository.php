@@ -19,9 +19,9 @@ class Repository
         return $version;
     }
 
-    private function getPackages($subset, $range, $skin = false)
+    private function getPackages($subset, $range, $skin = false, $force = false)
     {
-        if ($this->cache->is_cached($range)) {
+        if (!$force && $this->cache->is_cached($range)) {
             $extInfoJson = $this->cache->get_cache($range);
         } else {
             $url = $this->apiUrl.
@@ -67,7 +67,7 @@ class Repository
         return $packages;
     }
 
-    public function getJSON()
+    public function getJSON($force = false)
     {
         $packages = array();
         $json = json_decode(
@@ -81,12 +81,12 @@ class Repository
         for ($i = 0; $i < count($extensions); $i += 50) {
             $subset = array_slice($extensions, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'extensions-'.$range));
+            $packages = array_merge($packages, $this->getPackages($subset, 'extensions-'.$range, false, $force));
         }
         for ($i = 0; $i < count($skins); $i += 50) {
             $subset = array_slice($skins, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true));
+            $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
         }
         return json_encode(array('packages'=>$packages));
 
