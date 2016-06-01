@@ -88,7 +88,14 @@ class Repository
             $range = $i.'-'.($i + count($subset) - 1);
             $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
         }
-        return json_encode(array('packages'=>$packages));
+        return json_encode(
+            array(
+                'packages'=>$packages,
+                'includes'=>array(
+                    'include.json'=>array('sha1'=>'')
+                )
+            )
+        );
 
     }
 }

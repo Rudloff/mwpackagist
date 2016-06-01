@@ -1,0 +1,9 @@
+{
+	"name": "MediaWiki Packagist",
+	"homepage": "https://mwpackagist.netlib.re/",
+	"repositories": [{
+		"type": "vcs",
+		"url": "https://github.com/wikimedia/mediawiki.git"
+	}],
+	"require-all": true
+}
