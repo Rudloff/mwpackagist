@@ -14,27 +14,93 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testGetJSON()
     {
-        $json = json_decode($this->repo->getJSON(true));
+        $this->repo->getJSON(true);
+        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'};
-        $this->assertEquals($vector[0]->name, 'mediawiki/Vector');
-        $this->assertEquals($vector[0]->type, 'mediawiki-skin');
+        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26'};
+        $this->assertEquals($vector->name, 'mediawiki/Vector');
+        $this->assertEquals($vector->type, 'mediawiki-skin');
+        $this->assertEquals(
+            $vector->dist->url,
+            'https://extdist.wmflabs.org/dist/skins/Vector-REL1_26-186325f.tar.gz'
+        );
+        $this->assertEquals(
+            $vector->homepage,
+            'https://www.mediawiki.org/wiki/Skin:Vector'
+        );
+        $this->assertEquals(
+            $vector->source->url,
+            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+        );
+        $this->assertEquals(
+            $vector->support->source,
+            'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
+        );
 
-        $vector = $json->packages->{'mediawiki/VisualEditor'};
-        $this->assertEquals($vector[0]->name, 'mediawiki/VisualEditor');
-        $this->assertEquals($vector[0]->type, 'mediawiki-extension');
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26'};
+        $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
+        $this->assertEquals($ve->type, 'mediawiki-extension');
+        $this->assertEquals(
+            $ve->dist->url,
+            'https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_26-a733545.tar.gz'
+        );
+        $this->assertEquals(
+            $ve->homepage,
+            'https://www.mediawiki.org/wiki/Extension:VisualEditor'
+        );
+        $this->assertEquals(
+            $ve->source->url,
+            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+        );
+        $this->assertEquals(
+            $ve->support->source,
+            'https://phabricator.wikimedia.org/r/project/mediawiki/extensions/VisualEditor'
+        );
     }
 
     public function testGetJSONWithCache()
     {
-        $json = json_decode($this->repo->getJSON(false));
+        $this->repo->getJSON(false);
+        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'};
-        $this->assertEquals($vector[0]->name, 'mediawiki/Vector');
-        $this->assertEquals($vector[0]->type, 'mediawiki-skin');
+        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26'};
+        $this->assertEquals($vector->name, 'mediawiki/Vector');
+        $this->assertEquals($vector->type, 'mediawiki-skin');
+        $this->assertEquals(
+            $vector->dist->url,
+            'https://extdist.wmflabs.org/dist/skins/Vector-REL1_26-186325f.tar.gz'
+        );
+        $this->assertEquals(
+            $vector->homepage,
+            'https://www.mediawiki.org/wiki/Skin:Vector'
+        );
+        $this->assertEquals(
+            $vector->source->url,
+            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+        );
+        $this->assertEquals(
+            $vector->support->source,
+            'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
+        );
 
-        $vector = $json->packages->{'mediawiki/VisualEditor'};
-        $this->assertEquals($vector[0]->name, 'mediawiki/VisualEditor');
-        $this->assertEquals($vector[0]->type, 'mediawiki-extension');
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26'};
+        $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
+        $this->assertEquals($ve->type, 'mediawiki-extension');
+        $this->assertEquals(
+            $ve->dist->url,
+            'https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_26-a733545.tar.gz'
+        );
+        $this->assertEquals(
+            $ve->homepage,
+            'https://www.mediawiki.org/wiki/Extension:VisualEditor'
+        );
+        $this->assertEquals(
+            $ve->source->url,
+            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+        );
+        $this->assertEquals(
+            $ve->support->source,
+            'https://phabricator.wikimedia.org/r/project/mediawiki/extensions/VisualEditor'
+        );
     }
 }

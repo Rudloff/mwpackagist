@@ -102,12 +102,13 @@ class Repository
             array('packages'=>$packages)
         );
         $this->cache->set_cache('extensions', $json);
+        $includes = array('cache/extensions.json'=>array('sha1'=>sha1($json)));
+        if (is_file(__DIR__.'/../include.json')) {
+            $includes['include.json'] = array('sha1'=>sha1_file(__DIR__.'/../include.json'));
+        }
         return json_encode(
             array(
-                'includes'=>array(
-                    'cache/extensions.json'=>array('sha1'=>sha1($json)),
-                    'include.json'=>array('sha1'=>sha1_file(__DIR__.'/../include.json'))
-                )
+                'includes'=>array($includes)
             )
         );
 
