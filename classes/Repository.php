@@ -50,7 +50,7 @@ class Repository
                 $list = $extInfo->query->extdistbranches->extensions;
             }
             foreach ($list->$plugin as $version => $url) {
-                $package[] = array(
+                $package[self::convertVersion($version)] = array(
                     'name'=>$composerName,
                     'version'=>self::convertVersion($version),
                     'dist'=>array(
