@@ -6,3 +6,4 @@ SetOutputFilter DEFLATE
 AddOutputFilterByType DEFLATE text/css
 ExpiresActive On
 ExpiresByType text/css "access plus 1 week"
+ExpiresByType application/json "access plus 1 day"
