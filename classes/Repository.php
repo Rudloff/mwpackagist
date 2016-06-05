@@ -10,6 +10,7 @@ class Repository
     public function __construct()
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
+        $this->cache->cache_extension = '.json';
     }
 
     private function convertVersion($version)
@@ -88,10 +89,14 @@ class Repository
             $range = $i.'-'.($i + count($subset) - 1);
             $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
         }
+        $json = json_encode(
+            array('packages'=>$packages)
+        );
+        $this->cache->set_cache('extensions', $json);
         return json_encode(
             array(
-                'packages'=>$packages,
                 'includes'=>array(
+                    'cache/extensions.json'=>array('sha1'=>sha1($json)),
                     'include.json'=>array('sha1'=>sha1_file(__DIR__.'/../include.json'))
                 )
             )
