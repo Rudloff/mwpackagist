@@ -92,7 +92,7 @@ class Repository
             array(
                 'packages'=>$packages,
                 'includes'=>array(
-                    'include.json'=>array('sha1'=>'')
+                    'include.json'=>array('sha1'=>sha1_file(__DIR__.'/../include.json'))
                 )
             )
         );
