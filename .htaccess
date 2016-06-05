@@ -1,7 +1,6 @@
 RewriteEngine On
 RewriteBase /
 RewriteRule packages.json packages.php [L]
-Header set Strict-Transport-Security "max-age=15552000; includeSubDomains; preload"
 SetOutputFilter DEFLATE
 AddOutputFilterByType DEFLATE text/css
 ExpiresActive On
