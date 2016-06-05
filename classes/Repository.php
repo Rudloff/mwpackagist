@@ -37,9 +37,9 @@ class Repository
         }
         $extInfo = json_decode($extInfoJson);
         if ($skin) {
-            $type = 'mediawiki-skin';
+            $type = 'skin';
         } else {
-            $type = 'mediawiki-extension';
+            $type = 'extension';
         }
         foreach ($subset as $plugin) {
             $composerName = 'mediawiki/'.$plugin;
@@ -57,9 +57,18 @@ class Repository
                         'url'=>$url,
                         'type'=>'tar'
                     ),
-                    'type'=>$type,
+                    'type'=>'mediawiki-'.$type,
                     'require'=>array(
                         'composer/installers'=>'~1.0'
+                    ),
+                    'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
+                    'source'=>array(
+                        'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
+                        'type'=>'git',
+                        'reference'=>$version
+                    ),
+                    'support'=>array(
+                        'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
                     )
                 );
             }
