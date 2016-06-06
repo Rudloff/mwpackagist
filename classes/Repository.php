@@ -11,6 +11,7 @@ class Repository
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
         $this->cache->cache_extension = '.json';
+        $this->cache->cache_time = 86400;
     }
 
     private function convertVersion($version)
