@@ -109,7 +109,7 @@ class Repository
         }
         return json_encode(
             array(
-                'includes'=>array($includes)
+                'includes'=>$includes
             )
         );
 
