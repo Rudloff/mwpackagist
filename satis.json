@@ -6,5 +6,6 @@
 		"url": "https://github.com/wikimedia/mediawiki.git"
 	}],
 	"require-all": true,
-	"output-html": false
+	"output-html": false,
+	"output-dir": "."
 }

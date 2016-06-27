@@ -10,13 +10,19 @@ class Repository
     public function __construct()
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
+        $this->cache->cache_extension = '.json';
+        $this->cache->cache_time = 86400;
     }
 
-    private function convertVersion($version)
+    private function convertVersion($version, $hash)
     {
-        $version = str_replace('REL', '', $version);
-        $version = str_replace('_', '.', $version);
-        return $version;
+        if ($version == 'master') {
+            return 'dev-master';
+        } else {
+            $version = str_replace('REL', '', $version);
+            $version = str_replace('_', '.', $version);
+            return $version.'+'.$hash;
+        }
     }
 
     private function getPackages($subset, $range, $skin = false, $force = false)
@@ -36,9 +42,9 @@ class Repository
         }
         $extInfo = json_decode($extInfoJson);
         if ($skin) {
-            $type = 'mediawiki-skin';
+            $type = 'skin';
         } else {
-            $type = 'mediawiki-extension';
+            $type = 'extension';
         }
         foreach ($subset as $plugin) {
             $composerName = 'mediawiki/'.$plugin;
@@ -49,16 +55,26 @@ class Repository
                 $list = $extInfo->query->extdistbranches->extensions;
             }
             foreach ($list->$plugin as $version => $url) {
-                $package[] = array(
+                preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
+                $package[self::convertVersion($version, $versionParts[2])] = array(
                     'name'=>$composerName,
-                    'version'=>self::convertVersion($version),
+                    'version'=>self::convertVersion($version, $versionParts[2]),
                     'dist'=>array(
                         'url'=>$url,
                         'type'=>'tar'
                     ),
-                    'type'=>$type,
+                    'type'=>'mediawiki-'.$type,
                     'require'=>array(
                         'composer/installers'=>'~1.0'
+                    ),
+                    'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
+                    'source'=>array(
+                        'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
+                        'type'=>'git',
+                        'reference'=>$versionParts[2]
+                    ),
+                    'support'=>array(
+                        'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
                     )
                 );
             }
@@ -88,12 +104,17 @@ class Repository
             $range = $i.'-'.($i + count($subset) - 1);
             $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
         }
+        $json = json_encode(
+            array('packages'=>$packages)
+        );
+        $this->cache->set_cache('extensions', $json);
+        $includes = array('cache/extensions.json'=>array('sha1'=>sha1($json)));
+        if (is_file(__DIR__.'/../include.json')) {
+            $includes['include.json'] = array('sha1'=>sha1_file(__DIR__.'/../include.json'));
+        }
         return json_encode(
             array(
-                'packages'=>$packages,
-                'includes'=>array(
-                    'include.json'=>array('sha1'=>'')
-                )
+                'includes'=>$includes
             )
         );
 
