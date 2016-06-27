@@ -59,6 +59,7 @@ class Repository
                 $package[self::convertVersion($version, $versionParts[2])] = array(
                     'name'=>$composerName,
                     'version'=>self::convertVersion($version, $versionParts[2]),
+                    'keywords'=>array('mediawiki'),
                     'dist'=>array(
                         'url'=>$url,
                         'type'=>'tar'
