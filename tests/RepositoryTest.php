@@ -17,7 +17,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repo->getJSON(true);
         $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26'};
+        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
         $this->assertEquals($vector->type, 'mediawiki-skin');
         $this->assertEquals(
@@ -37,7 +37,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
         );
 
-        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26'};
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26+a733545'};
         $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
         $this->assertEquals($ve->type, 'mediawiki-extension');
         $this->assertEquals(
@@ -63,7 +63,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repo->getJSON(false);
         $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26'};
+        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
         $this->assertEquals($vector->type, 'mediawiki-skin');
         $this->assertEquals(
@@ -83,7 +83,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
         );
 
-        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26'};
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26+a733545'};
         $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
         $this->assertEquals($ve->type, 'mediawiki-extension');
         $this->assertEquals(
