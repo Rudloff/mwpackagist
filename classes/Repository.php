@@ -16,9 +16,13 @@ class Repository
 
     private function convertVersion($version)
     {
-        $version = str_replace('REL', '', $version);
-        $version = str_replace('_', '.', $version);
-        return $version;
+        if ($version == 'master') {
+            return 'dev-master';
+        } else {
+            $version = str_replace('REL', '', $version);
+            $version = str_replace('_', '.', $version);
+            return $version;
+        }
     }
 
     private function getPackages($subset, $range, $skin = false, $force = false)
@@ -51,9 +55,10 @@ class Repository
                 $list = $extInfo->query->extdistbranches->extensions;
             }
             foreach ($list->$plugin as $version => $url) {
+                preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
                 $package[self::convertVersion($version)] = array(
                     'name'=>$composerName,
-                    'version'=>self::convertVersion($version),
+                    'version'=>self::convertVersion($version).'+'.$versionParts[2],
                     'dist'=>array(
                         'url'=>$url,
                         'type'=>'tar'
@@ -66,7 +71,7 @@ class Repository
                     'source'=>array(
                         'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
                         'type'=>'git',
-                        'reference'=>$version
+                        'reference'=>$versionParts[2]
                     ),
                     'support'=>array(
                         'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
