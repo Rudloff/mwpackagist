@@ -14,14 +14,14 @@ class Repository
         $this->cache->cache_time = 86400;
     }
 
-    private function convertVersion($version)
+    private function convertVersion($version, $hash)
     {
         if ($version == 'master') {
             return 'dev-master';
         } else {
             $version = str_replace('REL', '', $version);
             $version = str_replace('_', '.', $version);
-            return $version;
+            return $version.'+'.$hash;
         }
     }
 
@@ -56,9 +56,9 @@ class Repository
             }
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
-                $package[self::convertVersion($version)] = array(
+                $package[self::convertVersion($version, $versionParts[2])] = array(
                     'name'=>$composerName,
-                    'version'=>self::convertVersion($version).'+'.$versionParts[2],
+                    'version'=>self::convertVersion($version, $versionParts[2]),
                     'dist'=>array(
                         'url'=>$url,
                         'type'=>'tar'
