@@ -6,6 +6,7 @@
 		"grunt": "~1.0.1",
 		"grunt-jslint": "~1.1.14",
 		"grunt-shipit": "~1.0.0",
-		"shipit-git-update": "~0.1.0"
+		"shipit-git-update": "~0.1.0",
+		"shipit-composer-simple": "~0.1.0"
 	}
 }

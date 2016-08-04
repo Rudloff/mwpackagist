@@ -5,6 +5,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jslint');
     grunt.loadNpmTasks('grunt-shipit');
     grunt.loadNpmTasks('shipit-git-update');
+    grunt.loadNpmTasks('shipit-composer-simple');
 
     grunt.initConfig({
         jslint: {
@@ -16,16 +17,15 @@ module.exports = function (grunt) {
             prod: {
                 deployTo: '/var/www/mwpackagist',
                 servers: 'pierre@dev.rudloff.pro',
-                postUpdateCmd: 'composer install --no-dev'
+                composer: {
+                    noDev: true,
+                    cmd: 'satis'
+                }
             }
         }
     });
 
-    grunt.registerTask('satis', function () {
-        grunt.shipit.remote('cd ' + grunt.shipit.config.deployTo + '; composer satis', this.async());
-    });
-
     grunt.registerTask('lint', ['jslint']);
-    grunt.registerTask('prod', ['shipit:prod', 'update']);
-    grunt.registerTask('prod:satis', ['shipit:prod', 'satis']);
+    grunt.registerTask('prod', ['shipit:prod', 'update', 'composer:install']);
+    grunt.registerTask('satis', ['shipit:prod', 'composer:cmd']);
 };
