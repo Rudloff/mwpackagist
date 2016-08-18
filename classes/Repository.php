@@ -54,30 +54,37 @@ class Repository
             } else {
                 $list = $extInfo->query->extdistbranches->extensions;
             }
+            if (isset($list->$plugin->source)) {
+                $source = $list->$plugin->source;
+            } else {
+                $source = 'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin;
+            }
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
-                $package[self::convertVersion($version, $versionParts[2])] = array(
-                    'name'=>$composerName,
-                    'version'=>self::convertVersion($version, $versionParts[2]),
-                    'keywords'=>array('mediawiki'),
-                    'dist'=>array(
-                        'url'=>$url,
-                        'type'=>'tar'
-                    ),
-                    'type'=>'mediawiki-'.$type,
-                    'require'=>array(
-                        'composer/installers'=>'~1.0'
-                    ),
-                    'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
-                    'source'=>array(
-                        'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
-                        'type'=>'git',
-                        'reference'=>$versionParts[2]
-                    ),
-                    'support'=>array(
-                        'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
-                    )
-                );
+                if (isset($versionParts[2])) {
+                    $package[self::convertVersion($version, $versionParts[2])] = array(
+                        'name'=>$composerName,
+                        'version'=>self::convertVersion($version, $versionParts[2]),
+                        'keywords'=>array('mediawiki'),
+                        'dist'=>array(
+                            'url'=>$url,
+                            'type'=>'tar'
+                        ),
+                        'type'=>'mediawiki-'.$type,
+                        'require'=>array(
+                            'composer/installers'=>'~1.0'
+                        ),
+                        'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
+                        'source'=>array(
+                            'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
+                            'type'=>'git',
+                            'reference'=>$versionParts[2]
+                        ),
+                        'support'=>array(
+                            'source'=>$source
+                        )
+                    );
+                }
             }
             $packages[$composerName] = $package;
         }
