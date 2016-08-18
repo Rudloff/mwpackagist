@@ -4,3 +4,4 @@ bower_components/
 include/
 include.json
 node_modules/
+cache_test/

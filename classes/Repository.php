@@ -7,11 +7,14 @@ class Repository
 
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
-    public function __construct()
+    public function __construct($cachePath = null)
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
         $this->cache->cache_extension = '.json';
         $this->cache->cache_time = 86400;
+        if (isset($cachePath)) {
+            $this->cache->cache_path = $cachePath;
+        }
     }
 
     private function convertVersion($version, $hash)
