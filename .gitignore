@@ -5,3 +5,4 @@ include/
 include.json
 node_modules/
 cache_test/
+clover.xml
