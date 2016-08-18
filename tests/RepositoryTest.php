@@ -30,7 +30,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $vector->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+            'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git'
         );
         $this->assertEquals(
             $vector->support->source,
@@ -50,7 +50,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $ve->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+            'https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor.git'
         );
         $this->assertEquals(
             $ve->support->source,
@@ -76,7 +76,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $vector->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+            'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git'
         );
         $this->assertEquals(
             $vector->support->source,
@@ -96,7 +96,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $ve->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+            'https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor.git'
         );
         $this->assertEquals(
             $ve->support->source,
