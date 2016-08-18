@@ -7,11 +7,14 @@ class Repository
 
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
-    public function __construct()
+    public function __construct($cachePath = null)
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
         $this->cache->cache_extension = '.json';
         $this->cache->cache_time = 86400;
+        if (isset($cachePath)) {
+            $this->cache->cache_path = $cachePath;
+        }
     }
 
     private function convertVersion($version, $hash)
@@ -54,29 +57,37 @@ class Repository
             } else {
                 $list = $extInfo->query->extdistbranches->extensions;
             }
+            if (isset($list->$plugin->source)) {
+                $source = $list->$plugin->source;
+            } else {
+                $source = 'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin;
+            }
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
-                $package[self::convertVersion($version, $versionParts[2])] = array(
-                    'name'=>$composerName,
-                    'version'=>self::convertVersion($version, $versionParts[2]),
-                    'dist'=>array(
-                        'url'=>$url,
-                        'type'=>'tar'
-                    ),
-                    'type'=>'mediawiki-'.$type,
-                    'require'=>array(
-                        'composer/installers'=>'~1.0'
-                    ),
-                    'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
-                    'source'=>array(
-                        'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
-                        'type'=>'git',
-                        'reference'=>$versionParts[2]
-                    ),
-                    'support'=>array(
-                        'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
-                    )
-                );
+                if (isset($versionParts[2])) {
+                    $package[self::convertVersion($version, $versionParts[2])] = array(
+                        'name'=>$composerName,
+                        'version'=>self::convertVersion($version, $versionParts[2]),
+                        'keywords'=>array('mediawiki'),
+                        'dist'=>array(
+                            'url'=>$url,
+                            'type'=>'tar'
+                        ),
+                        'type'=>'mediawiki-'.$type,
+                        'require'=>array(
+                            'composer/installers'=>'~1.0'
+                        ),
+                        'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
+                        'source'=>array(
+                            'url'=>$source,
+                            'type'=>'git',
+                            'reference'=>$versionParts[2]
+                        ),
+                        'support'=>array(
+                            'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
+                        )
+                    );
+                }
             }
             $packages[$composerName] = $package;
         }
@@ -117,6 +128,5 @@ class Repository
                 'includes'=>$includes
             )
         );
-
     }
 }

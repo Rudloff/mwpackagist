@@ -9,13 +9,13 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->repo = new Repository();
+        $this->repo = new Repository(__DIR__.'/../cache_test/');
     }
 
     public function testGetJSON()
     {
         $this->repo->getJSON(true);
-        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
+        $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
         $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
@@ -30,7 +30,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $vector->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+            'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git'
         );
         $this->assertEquals(
             $vector->support->source,
@@ -50,7 +50,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $ve->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+            'https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor.git'
         );
         $this->assertEquals(
             $ve->support->source,
@@ -61,7 +61,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     public function testGetJSONWithCache()
     {
         $this->repo->getJSON(false);
-        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
+        $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
         $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
@@ -76,7 +76,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $vector->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector'
+            'https://gerrit.wikimedia.org/r/mediawiki/skins/Vector.git'
         );
         $this->assertEquals(
             $vector->support->source,
@@ -96,7 +96,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(
             $ve->source->url,
-            'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor'
+            'https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor.git'
         );
         $this->assertEquals(
             $ve->support->source,
