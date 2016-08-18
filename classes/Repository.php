@@ -57,11 +57,6 @@ class Repository
             } else {
                 $list = $extInfo->query->extdistbranches->extensions;
             }
-            if (isset($list->$plugin->source)) {
-                $source = $list->$plugin->source;
-            } else {
-                $source = 'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin;
-            }
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
                 if (isset($versionParts[2])) {
@@ -79,7 +74,7 @@ class Repository
                         ),
                         'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
                         'source'=>array(
-                            'url'=>$source,
+                            'url'=>$list->$plugin->source,
                             'type'=>'git',
                             'reference'=>$versionParts[2]
                         ),
