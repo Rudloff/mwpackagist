@@ -60,7 +60,7 @@ class Repository
             if (isset($list->$plugin->source)) {
                 $source = $list->$plugin->source;
             } else {
-                $source = 'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin;
+                $source = 'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin;
             }
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
@@ -79,12 +79,12 @@ class Repository
                         ),
                         'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
                         'source'=>array(
-                            'url'=>'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin,
+                            'url'=>$source,
                             'type'=>'git',
                             'reference'=>$versionParts[2]
                         ),
                         'support'=>array(
-                            'source'=>$source
+                            'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
                         )
                     );
                 }
