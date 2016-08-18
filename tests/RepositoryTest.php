@@ -15,7 +15,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     public function testGetJSON()
     {
         $this->repo->getJSON(true);
-        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
+        $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
         $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
@@ -61,7 +61,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     public function testGetJSONWithCache()
     {
         $this->repo->getJSON(false);
-        $json = json_decode(file_get_contents(__DIR__.'/../cache/extensions.json'));
+        $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
         $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
