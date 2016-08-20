@@ -1,28 +1,28 @@
 {
-	"name": "rudloff/mwpackagist",
-	"description": "Install and manage MediaWiki extensions/skins with Composer",
-	"license": "GPL-3.0",
-	"require": {
-		"gilbitron/php-simplecache": "~1.4.1",
-		"composer/satis": "~1.0.0@alpha"
-	},
-	"require-dev": {
-		"symfony/var-dumper": "~3.1.0",
-		"squizlabs/php_codesniffer": "~2.6.2",
-		"phpunit/phpunit": "~5.4.8"
-	},
-	"autoload": {
-		"psr-4": {
-			"MWPackagist\\": "classes/"
-		}
-	},
-    "config": {
-        "process-timeout": 0
-    },
-	"scripts": {
-		"satis": [
-			"vendor/composer/satis/bin/satis build",
-			"mv packages.json include.json"
-		]
-	}
+  "name": "rudloff/mwpackagist",
+  "description": "Install and manage MediaWiki extensions/skins with Composer",
+  "license": "GPL-3.0",
+  "require": {
+    "gilbitron/php-simplecache": "~1.4.1",
+    "composer/satis": "~1.0.0@alpha"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "~3.1.0",
+    "squizlabs/php_codesniffer": "~2.6.2",
+    "phpunit/phpunit": "~5.4.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "MWPackagist\\": "classes/"
+    }
+  },
+  "config": {
+    "process-timeout": 0
+  },
+  "scripts": {
+    "satis": [
+      "vendor/composer/satis/bin/satis build",
+      "mv packages.json include.json"
+    ]
+  }
 }

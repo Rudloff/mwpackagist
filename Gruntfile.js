@@ -8,6 +8,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('shipit-composer-simple');
     grunt.loadNpmTasks('grunt-phpcs');
     grunt.loadNpmTasks('grunt-phpunit');
+    grunt.loadNpmTasks('grunt-jsonlint');
+    grunt.loadNpmTasks('grunt-fixpack');
+
 
     grunt.initConfig({
         jslint: {
@@ -47,10 +50,23 @@ module.exports = function (grunt) {
                     cmd: 'satis'
                 }
             }
+        },
+        jsonlint: {
+            manifests: {
+                src: ['*.json', '*.webapp'],
+                options: {
+                    format: true
+                }
+            }
+        },
+        fixpack: {
+            package: {
+                src: 'package.json'
+            }
         }
     });
 
-    grunt.registerTask('lint', ['phpcs', 'jslint']);
+    grunt.registerTask('lint', ['jslint', 'fixpack', 'jsonlint', 'phpcs']);
     grunt.registerTask('test', ['phpunit']);
     grunt.registerTask('prod', ['shipit:prod', 'update', 'composer:install']);
     grunt.registerTask('satis', ['shipit:prod', 'composer:cmd']);

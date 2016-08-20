@@ -1,6 +1,6 @@
 {
-	"name": "mwpackagist",
-	"dependencies": {
-		"furtive": "~2.2.4"
-	}
+  "name": "mwpackagist",
+  "dependencies": {
+    "furtive": "~2.2.4"
+  }
 }

@@ -6,7 +6,9 @@
   "bugs": "https://github.com/Rudloff/mwpackagist/issues",
   "devDependencies": {
     "grunt": "~1.0.1",
+    "grunt-fixpack": "~0.1.0",
     "grunt-jslint": "~1.1.14",
+    "grunt-jsonlint": "~1.1.0",
     "grunt-phpcs": "~0.4.0",
     "grunt-phpunit": "~0.3.6",
     "grunt-shipit": "~1.0.0",
