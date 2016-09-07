@@ -4,7 +4,6 @@ namespace MWPackagist;
 
 class Repository
 {
-
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
     public function __construct($cachePath = null)
@@ -24,6 +23,7 @@ class Repository
         } else {
             $version = str_replace('REL', '', $version);
             $version = str_replace('_', '.', $version);
+
             return $version.'+'.$hash;
         }
     }
@@ -51,7 +51,7 @@ class Repository
         }
         foreach ($subset as $plugin) {
             $composerName = 'mediawiki/'.$plugin;
-            $package = array();
+            $package = [];
             if ($skin) {
                 $list = $extInfo->query->extdistbranches->skins;
             } else {
@@ -60,38 +60,39 @@ class Repository
             foreach ($list->$plugin as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
                 if (isset($versionParts[2])) {
-                    $package[self::convertVersion($version, $versionParts[2])] = array(
-                        'name'=>$composerName,
-                        'version'=>self::convertVersion($version, $versionParts[2]),
-                        'keywords'=>array('mediawiki'),
-                        'dist'=>array(
-                            'url'=>$url,
-                            'type'=>'tar'
-                        ),
-                        'type'=>'mediawiki-'.$type,
-                        'require'=>array(
-                            'composer/installers'=>'~1.0'
-                        ),
-                        'homepage'=>'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
-                        'source'=>array(
-                            'url'=>$list->$plugin->source,
-                            'type'=>'git',
-                            'reference'=>$versionParts[2]
-                        ),
-                        'support'=>array(
-                            'source'=>'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin
-                        )
-                    );
+                    $package[self::convertVersion($version, $versionParts[2])] = [
+                        'name'     => $composerName,
+                        'version'  => self::convertVersion($version, $versionParts[2]),
+                        'keywords' => ['mediawiki'],
+                        'dist'     => [
+                            'url'  => $url,
+                            'type' => 'tar',
+                        ],
+                        'type'    => 'mediawiki-'.$type,
+                        'require' => [
+                            'composer/installers' => '~1.0',
+                        ],
+                        'homepage' => 'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
+                        'source'   => [
+                            'url'       => $list->$plugin->source,
+                            'type'      => 'git',
+                            'reference' => $versionParts[2],
+                        ],
+                        'support' => [
+                            'source' => 'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin,
+                        ],
+                    ];
                 }
             }
             $packages[$composerName] = $package;
         }
+
         return $packages;
     }
 
     public function getJSON($force = false)
     {
-        $packages = array();
+        $packages = [];
         $json = json_decode(
             file_get_contents(
                 $this->apiUrl.'?action=query&list=extdistrepos&format=json'
@@ -111,17 +112,18 @@ class Repository
             $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
         }
         $json = json_encode(
-            array('packages'=>$packages)
+            ['packages' => $packages]
         );
         $this->cache->set_cache('extensions', $json);
-        $includes = array('cache/extensions.json'=>array('sha1'=>sha1($json)));
+        $includes = ['cache/extensions.json' => ['sha1' => sha1($json)]];
         if (is_file(__DIR__.'/../include.json')) {
-            $includes['include.json'] = array('sha1'=>sha1_file(__DIR__.'/../include.json'));
+            $includes['include.json'] = ['sha1' => sha1_file(__DIR__.'/../include.json')];
         }
+
         return json_encode(
-            array(
-                'includes'=>$includes
-            )
+            [
+                'includes' => $includes,
+            ]
         );
     }
 }
