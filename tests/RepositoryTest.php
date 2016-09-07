@@ -6,7 +6,6 @@ use MWPackagist\Repository;
 
 class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         $this->repo = new Repository(__DIR__.'/../cache_test/');
