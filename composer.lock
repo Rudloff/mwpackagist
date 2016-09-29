@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d504b14628161f971c14ca842376bb7d",
-    "content-hash": "e9f1554518631f3df593fa88497f071d",
+    "hash": "75d1095f3de97ee5e8d51a48ee18965d",
+    "content-hash": "e3d6d4f790492ffad6adf01df034bee8",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -144,16 +144,16 @@
         },
         {
             "name": "composer/satis",
-            "version": "1.0.0-alpha2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "10439c168643bd74d76fc894d61ae3291c999aee"
+                "reference": "45819bed6ca7b1ed6928dcf0f7bbce06a9159a66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/10439c168643bd74d76fc894d61ae3291c999aee",
-                "reference": "10439c168643bd74d76fc894d61ae3291c999aee",
+                "url": "https://api.github.com/repos/composer/satis/zipball/45819bed6ca7b1ed6928dcf0f7bbce06a9159a66",
+                "reference": "45819bed6ca7b1ed6928dcf0f7bbce06a9159a66",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2016-06-17 07:00:19"
+            "time": "2016-09-29 13:13:32"
         },
         {
             "name": "composer/semver",
@@ -2390,7 +2390,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "composer/satis": 15
+        "composer/satis": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

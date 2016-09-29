@@ -4,7 +4,7 @@
   "license": "GPL-3.0",
   "require": {
     "gilbitron/php-simplecache": "~1.4.1",
-    "composer/satis": "~1.0.0@alpha"
+    "composer/satis": "dev-master"
   },
   "require-dev": {
     "symfony/var-dumper": "~3.1.0",
@@ -21,8 +21,7 @@
   },
   "scripts": {
     "satis": [
-      "vendor/composer/satis/bin/satis build",
-      "mv packages.json include.json"
+      "vendor/composer/satis/bin/satis build"
     ]
   }
 }

@@ -9,5 +9,6 @@
   ],
   "require-all": true,
   "output-html": false,
-  "output-dir": "."
+  "output-dir": ".",
+  "include-filename": "include.json"
 }
