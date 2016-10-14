@@ -132,6 +132,25 @@ class Repository
     }
 
     /**
+     * Get all extensions or skins
+     * @param string[] $packages List of packages to get
+     * @param bool     $skin     Do we want skins?
+     * @param bool     $force    Ignore cache?
+     * @return array[]           Packages
+     */
+    private function getAllPackages($packages, $skin, $force)
+    {
+        $packagesNb = count($packages);
+        $results = [];
+        for ($i = 0; $i < $packagesNb; $i += 50) {
+            $subset = array_slice($packages, $i, 50);
+            $range = $i.'-'.($i + count($subset) - 1);
+            $results = array_merge($results, $this->getPackages($subset, $range, $skin, $force));
+        }
+        return $results;
+    }
+
+    /**
      * Generate Composer repository JSON.
      *
      * @param bool $force Ignore cache?
@@ -149,18 +168,8 @@ class Repository
         $extensions = $json->query->extdistrepos->extensions;
         $skins = $json->query->extdistrepos->skins;
 
-        $extensionsNb = count($extensions);
-        for ($i = 0; $i < $extensionsNb; $i += 50) {
-            $subset = array_slice($extensions, $i, 50);
-            $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, $range, false, $force));
-        }
-        $skinsNb = count($skins);
-        for ($i = 0; $i < $skinsNb; $i += 50) {
-            $subset = array_slice($skins, $i, 50);
-            $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, $range, true, $force));
-        }
+        $packages = array_merge($packages, $this->getAllPackages($extensions, false, $force));
+        $packages = array_merge($packages, $this->getAllPackages($skins, true, $force));
         $json = json_encode(
             ['packages' => $packages]
         );
