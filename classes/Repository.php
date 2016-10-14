@@ -89,6 +89,7 @@ class Repository
             $this->cache->set_cache($type.'-'.$range, $extInfoJson);
         }
         $extInfo = json_decode($extInfoJson);
+        $packages = [];
         foreach ($subset as $plugin) {
             $composerName = 'mediawiki/'.$plugin;
             $package = [];
