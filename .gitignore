@@ -7,3 +7,4 @@ node_modules/
 cache_test/
 clover.xml
 packages.json
+docs/

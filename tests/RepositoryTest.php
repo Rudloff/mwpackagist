@@ -1,16 +1,28 @@
 <?php
-
+/**
+ * RepositoryTest class
+ */
 namespace MWPackagist\Tests;
 
 use MWPackagist\Repository;
 
+/**
+ * Class used to test the Repository class
+ */
 class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Setup variables used by the tests
+     */
     protected function setUp()
     {
         $this->repo = new Repository(__DIR__.'/../cache_test/');
     }
 
+    /**
+     * Test the getJSON() function
+     * @return void
+     */
     public function testGetJSON()
     {
         $this->repo->getJSON(true);
@@ -57,6 +69,10 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Test the getJSON() function with cache enabled
+     * @return void
+     */
     public function testGetJSONWithCache()
     {
         $this->repo->getJSON(false);

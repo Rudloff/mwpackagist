@@ -1,13 +1,30 @@
 <?php
-
+/**
+ * Repository class
+ */
 namespace MWPackagist;
 
+/**
+ * Class used to create the Composer repository
+ */
 class Repository
 {
+    /**
+     * Base MediaWiki API URL
+     * @var string
+     */
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
+    /**
+     * SimpleCache instance
+     * @var \Gilbitron\Util\SimpleCache
+     */
     private $cache;
 
+    /**
+     * Repository constructor
+     * @param string $cachePath Path to cache
+     */
     public function __construct($cachePath = null)
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
@@ -18,6 +35,12 @@ class Repository
         }
     }
 
+    /**
+     * Convert MediaWiki version string to semantic versioning
+     * @param  string $version Version string to convert
+     * @param  string $hash    Git commit hash
+     * @return string Semantic version
+     */
     private function convertVersion($version, $hash)
     {
         if ($version == 'master') {
@@ -30,10 +53,23 @@ class Repository
         }
     }
 
+    /**
+     * Get packages from MediaWiki's extension repository
+     * @param  string[] $subset List of packages to get
+     * @param  string   $range  Request range used to split requests in several parts (xx-yy)
+     * @param  boolean  $skin   Do we want skins instead of extensions?
+     * @param  boolean  $force  Ignore cache?
+     * @return array List of packages
+     */
     private function getPackages($subset, $range, $skin = false, $force = false)
     {
-        if (!$force && $this->cache->is_cached($range)) {
-            $extInfoJson = $this->cache->get_cache($range);
+        if ($skin) {
+            $type = 'skin';
+        } else {
+            $type = 'extension';
+        }
+        if (!$force && $this->cache->is_cached($type.'-'.$range)) {
+            $extInfoJson = $this->cache->get_cache($type.'-'.$range);
         } else {
             $url = $this->apiUrl.
             '?action=query&format=json&list=extdistbranches';
@@ -43,14 +79,9 @@ class Repository
                 $url .= '&edbexts=';
             }
             $extInfoJson = $this->cache->do_curl($url.implode('|', $subset));
-            $this->cache->set_cache($range, $extInfoJson);
+            $this->cache->set_cache($type.'-'.$range, $extInfoJson);
         }
         $extInfo = json_decode($extInfoJson);
-        if ($skin) {
-            $type = 'skin';
-        } else {
-            $type = 'extension';
-        }
         foreach ($subset as $plugin) {
             $composerName = 'mediawiki/'.$plugin;
             $package = [];
@@ -92,6 +123,11 @@ class Repository
         return $packages;
     }
 
+    /**
+     * Generate Composer repository JSON
+     * @param  boolean $force Ignore cache?
+     * @return string JSON containing paths to other included JSON files
+     */
     public function getJSON($force = false)
     {
         $packages = [];
@@ -106,12 +142,12 @@ class Repository
         for ($i = 0; $i < count($extensions); $i += 50) {
             $subset = array_slice($extensions, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'extensions-'.$range, false, $force));
+            $packages = array_merge($packages, $this->getPackages($subset, $range, false, $force));
         }
         for ($i = 0; $i < count($skins); $i += 50) {
             $subset = array_slice($skins, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
+            $packages = array_merge($packages, $this->getPackages($subset, $range, true, $force));
         }
         $json = json_encode(
             ['packages' => $packages]
