@@ -6,6 +6,8 @@ class Repository
 {
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
+    private $cache;
+
     public function __construct($cachePath = null)
     {
         $this->cache = new \Gilbitron\Util\SimpleCache();
