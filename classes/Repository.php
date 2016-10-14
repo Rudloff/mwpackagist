@@ -149,12 +149,14 @@ class Repository
         $extensions = $json->query->extdistrepos->extensions;
         $skins = $json->query->extdistrepos->skins;
 
-        for ($i = 0; $i < count($extensions); $i += 50) {
+        $extensionsNb = count($extensions);
+        for ($i = 0; $i < $extensionsNb; $i += 50) {
             $subset = array_slice($extensions, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
             $packages = array_merge($packages, $this->getPackages($subset, $range, false, $force));
         }
-        for ($i = 0; $i < count($skins); $i += 50) {
+        $skinsNb = count($skins);
+        for ($i = 0; $i < $skinsNb; $i += 50) {
             $subset = array_slice($skins, $i, 50);
             $range = $i.'-'.($i + count($subset) - 1);
             $packages = array_merge($packages, $this->getPackages($subset, $range, true, $force));
