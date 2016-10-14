@@ -132,11 +132,13 @@ class Repository
     }
 
     /**
-     * Get all extensions or skins
+     * Get all extensions or skins.
+     *
      * @param string[] $packages List of packages to get
      * @param bool     $skin     Do we want skins?
      * @param bool     $force    Ignore cache?
-     * @return array[]           Packages
+     *
+     * @return array[] Packages
      */
     private function getAllPackages($packages, $skin, $force)
     {
@@ -147,6 +149,7 @@ class Repository
             $range = $i.'-'.($i + count($subset) - 1);
             $results = array_merge($results, $this->getPackages($subset, $range, $skin, $force));
         }
+
         return $results;
     }
 
