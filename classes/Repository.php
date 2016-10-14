@@ -1,28 +1,31 @@
 <?php
 /**
- * Repository class
+ * Repository class.
  */
 namespace MWPackagist;
 
 /**
- * Class used to create the Composer repository
+ * Class used to create the Composer repository.
  */
 class Repository
 {
     /**
-     * Base MediaWiki API URL
+     * Base MediaWiki API URL.
+     *
      * @var string
      */
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
     /**
-     * SimpleCache instance
+     * SimpleCache instance.
+     *
      * @var \Gilbitron\Util\SimpleCache
      */
     private $cache;
 
     /**
-     * Repository constructor
+     * Repository constructor.
+     *
      * @param string $cachePath Path to cache
      */
     public function __construct($cachePath = null)
@@ -36,9 +39,11 @@ class Repository
     }
 
     /**
-     * Convert MediaWiki version string to semantic versioning
-     * @param  string $version Version string to convert
-     * @param  string $hash    Git commit hash
+     * Convert MediaWiki version string to semantic versioning.
+     *
+     * @param string $version Version string to convert
+     * @param string $hash    Git commit hash
+     *
      * @return string Semantic version
      */
     private function convertVersion($version, $hash)
@@ -54,11 +59,13 @@ class Repository
     }
 
     /**
-     * Get packages from MediaWiki's extension repository
-     * @param  string[] $subset List of packages to get
-     * @param  string   $range  Request range used to split requests in several parts (xx-yy)
-     * @param  boolean  $skin   Do we want skins instead of extensions?
-     * @param  boolean  $force  Ignore cache?
+     * Get packages from MediaWiki's extension repository.
+     *
+     * @param string[] $subset List of packages to get
+     * @param string   $range  Request range used to split requests in several parts (xx-yy)
+     * @param bool     $skin   Do we want skins instead of extensions?
+     * @param bool     $force  Ignore cache?
+     *
      * @return array List of packages
      */
     private function getPackages($subset, $range, $skin = false, $force = false)
@@ -124,8 +131,10 @@ class Repository
     }
 
     /**
-     * Generate Composer repository JSON
-     * @param  boolean $force Ignore cache?
+     * Generate Composer repository JSON.
+     *
+     * @param bool $force Ignore cache?
+     *
      * @return string JSON containing paths to other included JSON files
      */
     public function getJSON($force = false)
