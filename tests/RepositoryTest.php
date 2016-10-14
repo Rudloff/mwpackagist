@@ -1,18 +1,18 @@
 <?php
 /**
- * RepositoryTest class
+ * RepositoryTest class.
  */
 namespace MWPackagist\Tests;
 
 use MWPackagist\Repository;
 
 /**
- * Class used to test the Repository class
+ * Class used to test the Repository class.
  */
 class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Setup variables used by the tests
+     * Setup variables used by the tests.
      */
     protected function setUp()
     {
@@ -20,7 +20,8 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the getJSON() function
+     * Test the getJSON() function.
+     *
      * @return void
      */
     public function testGetJSON()
@@ -70,7 +71,8 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test the getJSON() function with cache enabled
+     * Test the getJSON() function with cache enabled.
+     *
      * @return void
      */
     public function testGetJSONWithCache()
