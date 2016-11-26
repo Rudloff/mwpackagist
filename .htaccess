@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /
+RewriteBase /mw-packagist/
 RewriteRule packages.json packages.php [L]
 SetOutputFilter DEFLATE
 AddOutputFilterByType DEFLATE text/css
