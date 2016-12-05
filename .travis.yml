@@ -5,5 +5,3 @@ install:
     - composer install
 after_success:
     - bash <(curl -s https://codecov.io/bash)
-before_script:
-    - composer satis
