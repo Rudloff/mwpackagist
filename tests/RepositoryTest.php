@@ -2,6 +2,7 @@
 /**
  * RepositoryTest class.
  */
+
 namespace MWPackagist\Tests;
 
 use MWPackagist\Repository;
