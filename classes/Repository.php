@@ -2,6 +2,7 @@
 /**
  * Repository class.
  */
+
 namespace MWPackagist;
 
 /**
