@@ -30,12 +30,12 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repo->getJSON(true);
         $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
+        $vector = $json->packages->{'mediawiki/Vector'}->{'dev-master'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
         $this->assertEquals($vector->type, 'mediawiki-skin');
-        $this->assertEquals(
-            $vector->dist->url,
-            'https://extdist.wmflabs.org/dist/skins/Vector-REL1_26-186325f.tar.gz'
+        $this->assertContains(
+            'https://extdist.wmflabs.org/dist/skins/',
+            $vector->dist->url
         );
         $this->assertEquals(
             $vector->homepage,
@@ -50,12 +50,12 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
         );
 
-        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26+a733545'};
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'dev-master'};
         $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
         $this->assertEquals($ve->type, 'mediawiki-extension');
-        $this->assertEquals(
-            $ve->dist->url,
-            'https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_26-a733545.tar.gz'
+        $this->assertContains(
+            'https://extdist.wmflabs.org/dist/extensions/',
+            $ve->dist->url
         );
         $this->assertEquals(
             $ve->homepage,
@@ -81,12 +81,12 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repo->getJSON(false);
         $json = json_decode(file_get_contents(__DIR__.'/../cache_test/extensions.json'));
 
-        $vector = $json->packages->{'mediawiki/Vector'}->{'1.26+186325f'};
+        $vector = $json->packages->{'mediawiki/Vector'}->{'dev-master'};
         $this->assertEquals($vector->name, 'mediawiki/Vector');
         $this->assertEquals($vector->type, 'mediawiki-skin');
-        $this->assertEquals(
-            $vector->dist->url,
-            'https://extdist.wmflabs.org/dist/skins/Vector-REL1_26-186325f.tar.gz'
+        $this->assertContains(
+            'https://extdist.wmflabs.org/dist/skins/',
+            $vector->dist->url
         );
         $this->assertEquals(
             $vector->homepage,
@@ -101,12 +101,12 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             'https://phabricator.wikimedia.org/r/project/mediawiki/skins/Vector'
         );
 
-        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'1.26+a733545'};
+        $ve = $json->packages->{'mediawiki/VisualEditor'}->{'dev-master'};
         $this->assertEquals($ve->name, 'mediawiki/VisualEditor');
         $this->assertEquals($ve->type, 'mediawiki-extension');
-        $this->assertEquals(
-            $ve->dist->url,
-            'https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_26-a733545.tar.gz'
+        $this->assertContains(
+            'https://extdist.wmflabs.org/dist/extensions/',
+            $ve->dist->url
         );
         $this->assertEquals(
             $ve->homepage,
