@@ -6,11 +6,12 @@
 namespace MWPackagist\Tests;
 
 use MWPackagist\Repository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class used to test the Repository class.
  */
-class RepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends TestCase
 {
     /**
      * Setup variables used by the tests.
