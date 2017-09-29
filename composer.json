@@ -21,7 +21,7 @@
   },
   "scripts": {
     "satis": [
-      "vendor/composer/satis/bin/satis build"
+      "satis build"
     ]
   }
 }
