@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <phpunit bootstrap="vendor/autoload.php">
     <filter>
         <whitelist>
@@ -10,7 +11,7 @@
         </testsuite>
     </testsuites>
     <logging>
-        <log type="coverage-html" target="coverage/" />
-        <log type="coverage-clover" target="clover.xml" />
+        <log type="coverage-html" target="coverage/"/>
+        <log type="coverage-clover" target="clover.xml"/>
     </logging>
 </phpunit>
