@@ -5,4 +5,4 @@ Install and manage MediaWiki extensions/skins with Composer
 
     composer install
     composer satis
-    bower install
+    yarn install

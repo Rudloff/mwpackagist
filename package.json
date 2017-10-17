@@ -16,6 +16,9 @@
     "shipit-composer-simple": "~0.1.0",
     "shipit-git-update": "~0.1.0"
   },
+  "dependencies": {
+    "furtive": "~2.4.0"  
+  },
   "homepage": "https://mwpackagist.netlib.re/",
   "keywords": [
     "composer",
