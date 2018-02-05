@@ -5,6 +5,8 @@
 
 namespace MWPackagist;
 
+use Gilbitron\Util\SimpleCache;
+
 /**
  * Class used to create the Composer repository.
  */
@@ -20,7 +22,7 @@ class Repository
     /**
      * SimpleCache instance.
      *
-     * @var \Gilbitron\Util\SimpleCache
+     * @var SimpleCache
      */
     private $cache;
 
@@ -31,7 +33,7 @@ class Repository
      */
     public function __construct($cachePath = null)
     {
-        $this->cache = new \Gilbitron\Util\SimpleCache();
+        $this->cache = new SimpleCache();
         $this->cache->cache_extension = '.json';
         $this->cache->cache_time = 86400;
         if (isset($cachePath)) {
