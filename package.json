@@ -25,6 +25,6 @@
     "mediawiki"
   ],
   "license": "GPL-3.0",
-  "main": "index.html",
+  "main": "Gruntfile.js",
   "repository": "https://github.com/Rudloff/mwpackagist.git"
 }
