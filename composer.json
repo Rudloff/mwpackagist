@@ -1,15 +1,13 @@
 {
   "name": "rudloff/mwpackagist",
   "description": "Install and manage MediaWiki extensions/skins with Composer",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "require": {
-    "gilbitron/php-simplecache": "~1.4.1",
-    "composer/satis": "~1.0.0"
+    "composer/satis": "^1.0",
+    "symfony/var-dumper": "^4.3"
   },
   "require-dev": {
-    "symfony/var-dumper": "~3.3.9",
-    "squizlabs/php_codesniffer": "~3.1.0",
-    "phpunit/phpunit": "~6.3.1"
+    "squizlabs/php_codesniffer": "^3.5"
   },
   "autoload": {
     "psr-4": {
@@ -19,9 +17,10 @@
   "config": {
     "process-timeout": 0
   },
+  "bin": [
+    "mwpackagist-build"
+  ],
   "scripts": {
-    "satis": [
-      "satis build"
-    ]
+    "build": "mwpackagist-build"
   }
 }

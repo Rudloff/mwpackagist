@@ -13,11 +13,7 @@
     "grunt-jslint": "^1.1.15",
     "grunt-jsonlint": "~1.1.0",
     "grunt-phpcs": "~0.4.0",
-    "grunt-phpdocumentor": "~0.4.1",
-    "grunt-phpunit": "~0.3.6",
-    "grunt-shipit": "^1.0.1",
-    "shipit-composer-simple": "~0.1.0",
-    "shipit-git-update": "~0.1.0"
+    "grunt-phpdocumentor": "~0.4.1"
   },
   "homepage": "https://mwpackagist.netlib.re/",
   "keywords": [
