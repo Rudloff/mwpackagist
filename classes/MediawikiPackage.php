@@ -78,7 +78,7 @@ class MediawikiPackage extends CompletePackage
                     $fullName,
                     'composer/installers',
                     $constraint,
-                    null,
+                    'requires',
                     $constraint->getPrettyString()
                 )
             ]

@@ -16,6 +16,7 @@ use Composer\Package\RootPackage;
 use Composer\Repository\VcsRepository;
 use Composer\Factory;
 use Composer\IO\ConsoleIO;
+use Composer\IO\NullIO;
 use Composer\Config;
 
 /**
@@ -42,11 +43,18 @@ class BuildCommand extends Command
      * Execute the command.
      * @param  InputInterface  $input  Input
      * @param  OutputInterface $output Output
-     * @return void
+     * @return null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new ConsoleIO($input, $output, $this->getHelperSet());
+        $helperSet = $this->getHelperSet();
+        if (isset($helperSet)) {
+            $io = new ConsoleIO($input, $output, $helperSet);
+        } else {
+            // If console IO is not available for some reason.
+            $io = new NullIO();
+        }
+
         $rootDir = dirname(__DIR__);
 
         $rootPackage = new RootPackage('rudloff/mwpackagist', '2.0', '2.0');

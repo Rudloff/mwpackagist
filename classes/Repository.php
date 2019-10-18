@@ -16,6 +16,19 @@ use Composer\Json\JsonFile;
  */
 class Repository
 {
+
+    /**
+     * Interface used to write to the console.
+     * @var IOInterface
+     */
+    private $io;
+
+    /**
+     * Helper class used to fetch remote JSON files.
+     * @var RemoteFilesystem
+     */
+    private $rfs;
+
     /**
      * Base MediaWiki API URL.
      *
@@ -26,6 +39,7 @@ class Repository
 
     /**
      * Repository constructor.
+     * @param IOInterface $io Interface used to write to the console
      */
     public function __construct(IOInterface $io)
     {
@@ -38,7 +52,7 @@ class Repository
      *
      * @param string[] $subset List of package names to get
      * @param string   $range  Request range used to split requests in several parts (xx-yy)
-     * @param bool     $type   "extension" or "skin"
+     * @param string   $type   "extension" or "skin"
      *
      * @return MediawikiPackage[] Packages
      */
@@ -59,8 +73,8 @@ class Repository
         }
 
         $extInfo = JsonFile::parseJson(
-            $this->rfs->getContents(
-                parse_url($this->apiUrl, PHP_URL_HOST),
+            (string) $this->rfs->getContents(
+                (string) parse_url($this->apiUrl, PHP_URL_HOST),
                 $this->apiUrl . '?' . http_build_query($params),
                 false
             )
@@ -94,7 +108,7 @@ class Repository
      * Get all extensions or skins.
      *
      * @param string[] $packages List of package names to get
-     * @param bool     $type     "skin" or "extension"
+     * @param string   $type     "skin" or "extension"
      *
      * @return MediawikiPackage[] Packages
      */
@@ -122,8 +136,8 @@ class Repository
         $packages = [];
 
         $json = JsonFile::parseJson(
-            $this->rfs->getContents(
-                parse_url($this->apiUrl, PHP_URL_HOST),
+            (string) $this->rfs->getContents(
+                (string) parse_url($this->apiUrl, PHP_URL_HOST),
                 $this->apiUrl . '?' .
                     http_build_query(['action' => 'query', 'list' => 'extdistrepos', 'format' => 'json']),
                 false

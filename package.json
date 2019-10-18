@@ -8,12 +8,13 @@
     "furtive": "~2.4.0"
   },
   "devDependencies": {
-    "grunt": "~1.0.1",
+    "grunt": "^1.0.4",
     "grunt-fixpack": "~0.1.0",
     "grunt-jslint": "^1.1.15",
     "grunt-jsonlint": "~1.1.0",
     "grunt-phpcs": "~0.4.0",
-    "grunt-phpdocumentor": "~0.4.1"
+    "grunt-phpdocumentor": "~0.4.1",
+    "grunt-phpstan": "^0.2.0"
   },
   "homepage": "https://mwpackagist.netlib.re/",
   "keywords": [

@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-fixpack');
     grunt.loadNpmTasks('grunt-phpdocumentor');
+    grunt.loadNpmTasks('grunt-phpstan');
 
     grunt.initConfig({
         jslint: {
@@ -20,7 +21,7 @@ module.exports = function (grunt) {
                 bin: 'vendor/bin/phpcs'
             },
             php: {
-                src: ['*.php', 'classes/*.php']
+                src: ['mwpackagist-build', 'classes/*.php']
             }
         },
         jsonlint: {
@@ -42,9 +43,18 @@ module.exports = function (grunt) {
                     directory: 'classes/,tests/'
                 }
             }
+        },
+        phpstan: {
+            options: {
+                level: 'max',
+                bin: 'vendor/bin/phpstan'
+            },
+            php: {
+                src: ['mwpackagist-build', 'classes/*.php']
+            }
         }
     });
 
-    grunt.registerTask('lint', ['jslint', 'fixpack', 'jsonlint', 'phpcs']);
+    grunt.registerTask('lint', ['jslint', 'fixpack', 'jsonlint', 'phpcs', 'phpstan']);
     grunt.registerTask('doc', ['phpdocumentor']);
 };
