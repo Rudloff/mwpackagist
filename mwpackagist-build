@@ -6,7 +6,7 @@ use Symfony\Component\Console\Application;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$app = new Application();
+$app = new Application('MediaWiki Packagist build tool');
 $buildCommand = new BuildCommand();
 $app->add($buildCommand);
 $app->setDefaultCommand((string) $buildCommand->getName(), true);
