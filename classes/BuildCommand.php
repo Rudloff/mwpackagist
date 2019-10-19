@@ -78,7 +78,7 @@ class BuildCommand extends Command
 
         // Fetch core packages.
         $packageSelection = new PackageSelection($output, $rootDir, [], false);
-        $corePackages = $packageSelection->select($composer, true);
+        $corePackages = $packageSelection->select($composer, false);
 
         // Fetch extensions and skins.
         $repo = new Repository($io);
