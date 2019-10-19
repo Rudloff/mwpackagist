@@ -57,7 +57,7 @@ class BuildCommand extends Command
 
         $rootDir = dirname(__DIR__);
 
-        $rootPackage = new RootPackage('rudloff/mwpackagist', '2.0', '2.0');
+        $rootPackage = new RootPackage('rudloff/mwpackagist', '1.0', '1.0');
         $rootPackage->setHomepage('https://mwpackagist.netlib.re/');
         $rootPackage->setDescription('Install and manage MediaWiki extensions/skins with Composer');
 
