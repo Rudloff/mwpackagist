@@ -3,4 +3,3 @@ include/
 node_modules/
 packages.json
 docs/
-repo/
