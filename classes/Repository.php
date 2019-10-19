@@ -1,134 +1,158 @@
 <?php
 
+/**
+ * Repository class.
+ */
+
 namespace MWPackagist;
 
+use Exception;
+use Composer\IO\IOInterface;
+use Composer\Util\RemoteFilesystem;
+use Composer\Json\JsonFile;
+
+/**
+ * Class used to create the Composer repository.
+ */
 class Repository
 {
+
+    /**
+     * Interface used to write to the console.
+     * @var IOInterface
+     */
+    private $io;
+
+    /**
+     * Helper class used to fetch remote JSON files.
+     * @var RemoteFilesystem
+     */
+    private $rfs;
+
+    /**
+     * Base MediaWiki API URL.
+     *
+     * @var string
+     */
     private $apiUrl = 'https://www.mediawiki.org/w/api.php';
 
-    public function __construct($cachePath = null)
+
+    /**
+     * Repository constructor.
+     * @param IOInterface $io Interface used to write to the console
+     */
+    public function __construct(IOInterface $io)
     {
-        $this->cache = new \Gilbitron\Util\SimpleCache();
-        $this->cache->cache_extension = '.json';
-        $this->cache->cache_time = 86400;
-        if (isset($cachePath)) {
-            $this->cache->cache_path = $cachePath;
-        }
+        $this->io = $io;
+        $this->rfs = new RemoteFilesystem($this->io);
     }
 
-    private function convertVersion($version, $hash)
+    /**
+     * Get packages from MediaWiki's extension repository.
+     *
+     * @param string[] $subset List of package names to get
+     * @param string   $range  Request range used to split requests in several parts (xx-yy)
+     * @param string   $type   "extension" or "skin"
+     *
+     * @return MediawikiPackage[] Packages
+     */
+    private function getPackages(array $subset, $range, $type)
     {
-        if ($version == 'master') {
-            return 'dev-master';
-        } else {
-            $version = str_replace('REL', '', $version);
-            $version = str_replace('_', '.', $version);
+        $params = [
+            'action' => 'query',
+            'format' => 'json',
+            'list' => 'extdistbranches'
+        ];
 
-            return $version.'+'.$hash;
+        if ($type == 'skin') {
+            $params['edbskins'] = implode('|', $subset);
+        } elseif ($type == 'extension') {
+            $params['edbexts'] = implode('|', $subset);
+        } else {
+            throw new Exception('Invalid package type.');
         }
-    }
 
-    private function getPackages($subset, $range, $skin = false, $force = false)
-    {
-        if (!$force && $this->cache->is_cached($range)) {
-            $extInfoJson = $this->cache->get_cache($range);
-        } else {
-            $url = $this->apiUrl.
-            '?action=query&format=json&list=extdistbranches';
-            if ($skin) {
-                $url .= '&edbskins=';
-            } else {
-                $url .= '&edbexts=';
-            }
-            $extInfoJson = $this->cache->do_curl($url.implode('|', $subset));
-            $this->cache->set_cache($range, $extInfoJson);
-        }
-        $extInfo = json_decode($extInfoJson);
-        if ($skin) {
-            $type = 'skin';
-        } else {
-            $type = 'extension';
-        }
-        foreach ($subset as $plugin) {
-            $composerName = 'mediawiki/'.$plugin;
-            $package = [];
-            if ($skin) {
-                $list = $extInfo->query->extdistbranches->skins;
-            } else {
-                $list = $extInfo->query->extdistbranches->extensions;
-            }
-            if (isset($list->$plugin->source)) {
-                $source = $list->$plugin->source;
-            } else {
-                $source = 'https://gerrit.wikimedia.org/r/p/mediawiki/'.$type.'s/'.$plugin;
-            }
-            foreach ($list->$plugin as $version => $url) {
+        $extInfo = JsonFile::parseJson(
+            (string) $this->rfs->getContents(
+                (string) parse_url($this->apiUrl, PHP_URL_HOST),
+                $this->apiUrl . '?' . http_build_query($params),
+                false
+            )
+        );
+
+        $packages = [];
+        foreach ($subset as $name) {
+            $composerName = 'mediawiki/' . $name;
+
+            $list = $extInfo['query']['extdistbranches'][$type . 's'];
+
+            foreach ($list[$name] as $version => $url) {
                 preg_match('/(REL1_[0-9][0-9]|master)-(\w+)\.tar\.gz/', $url, $versionParts);
                 if (isset($versionParts[2])) {
-                    $package[self::convertVersion($version, $versionParts[2])] = [
-                        'name'    => $composerName,
-                        'version' => self::convertVersion($version, $versionParts[2]),
-                        'keywords'=> ['mediawiki'],
-                        'dist'    => [
-                            'url' => $url,
-                            'type'=> 'tar',
-                        ],
-                        'type'   => 'mediawiki-'.$type,
-                        'require'=> [
-                            'composer/installers'=> '~1.0',
-                        ],
-                        'homepage'=> 'https://www.mediawiki.org/wiki/'.ucfirst($type).':'.$plugin,
-                        'source'  => [
-                            'url'      => $source,
-                            'type'     => 'git',
-                            'reference'=> $versionParts[2],
-                        ],
-                        'support'=> [
-                            'source'=> 'https://phabricator.wikimedia.org/r/project/mediawiki/'.$type.'s/'.$plugin,
-                        ],
-                    ];
+                    $packages[] = new MediawikiPackage(
+                        $name,
+                        $type,
+                        $version,
+                        $versionParts[2],
+                        $url,
+                        $list[$name]['source']
+                    );
                 }
             }
-            $packages[$composerName] = $package;
         }
 
         return $packages;
     }
 
-    public function getJSON($force = false)
+    /**
+     * Get all extensions or skins.
+     *
+     * @param string[] $packages List of package names to get
+     * @param string   $type     "skin" or "extension"
+     *
+     * @return MediawikiPackage[] Packages
+     */
+    private function getAllPackagesFromType(array $packages, $type)
+    {
+        $packagesNb = count($packages);
+
+        $results = [];
+        for ($i = 0; $i < $packagesNb; $i += 50) {
+            $subset = array_slice($packages, $i, 50);
+            $range = $i . '-' . ($i + count($subset) - 1);
+            $results = array_merge($results, $this->getPackages($subset, $range, $type));
+        }
+
+        return $results;
+    }
+
+    /**
+     * Fetch all packages.
+     *
+     * @return MediawikiPackage[] Packages
+     */
+    public function getAllPackages()
     {
         $packages = [];
-        $json = json_decode(
-            file_get_contents(
-                $this->apiUrl.'?action=query&list=extdistrepos&format=json'
+
+        $json = JsonFile::parseJson(
+            (string) $this->rfs->getContents(
+                (string) parse_url($this->apiUrl, PHP_URL_HOST),
+                $this->apiUrl . '?' .
+                    http_build_query(['action' => 'query', 'list' => 'extdistrepos', 'format' => 'json']),
+                false
             )
         );
-        $extensions = $json->query->extdistrepos->extensions;
-        $skins = $json->query->extdistrepos->skins;
 
-        for ($i = 0; $i < count($extensions); $i += 50) {
-            $subset = array_slice($extensions, $i, 50);
-            $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'extensions-'.$range, false, $force));
-        }
-        for ($i = 0; $i < count($skins); $i += 50) {
-            $subset = array_slice($skins, $i, 50);
-            $range = $i.'-'.($i + count($subset) - 1);
-            $packages = array_merge($packages, $this->getPackages($subset, 'skins-'.$range, true, $force));
-        }
-        $json = json_encode(
-            ['packages'=>$packages]
-        );
-        $this->cache->set_cache('extensions', $json);
-        $includes = ['cache/extensions.json'=>['sha1'=>sha1($json)]];
-        if (is_file(__DIR__.'/../include.json')) {
-            $includes['include.json'] = ['sha1'=>sha1_file(__DIR__.'/../include.json')];
-        }
+        $extensions = $json['query']['extdistrepos']['extensions'];
+        $skins = $json['query']['extdistrepos']['skins'];
 
-        return json_encode(
-            [
-                'includes'=> $includes,
-            ]
-        );
+        $this->io->write('Fetching extensions');
+        $packages = array_merge($packages, $this->getAllPackagesFromType($extensions, 'extension'));
+
+        $this->io->write('Fetching skins');
+        $packages = array_merge($packages, $this->getAllPackagesFromType($skins, 'skin'));
+
+        return $packages;
     }
 }

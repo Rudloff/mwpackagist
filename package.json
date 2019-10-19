@@ -1,14 +1,30 @@
 {
-	"name": "mwpackagist",
-	"repository": "https://github.com/Rudloff/mwpackagist.git",
-	"license": "GPL-3.0",
-	"devDependencies": {
-		"grunt": "~1.0.1",
-		"grunt-jslint": "~1.1.14",
-		"grunt-shipit": "~1.0.0",
-		"shipit-git-update": "~0.1.0",
-		"shipit-composer-simple": "~0.1.0",
-		"grunt-phpcs": "~0.4.0",
-		"grunt-phpunit": "~0.3.6"
-	}
+  "name": "mwpackagist",
+  "description": "Install and manage MediaWiki extensions/skins with Composer",
+  "version": "1.0.0",
+  "author": "Pierre Rudloff",
+  "bugs": "https://github.com/Rudloff/mwpackagist/issues",
+  "dependencies": {
+    "furtive": "~2.4.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-fixpack": "~0.1.0",
+    "grunt-jslint": "^1.1.15",
+    "grunt-jsonlint": "~1.1.0",
+    "grunt-phpcs": "~0.4.0",
+    "grunt-phpdocumentor": "~0.4.1",
+    "grunt-phpstan": "^0.2.0"
+  },
+  "homepage": "https://mwpackagist.netlib.re/",
+  "keywords": [
+    "composer",
+    "mediawiki"
+  ],
+  "license": "GPL-3.0",
+  "main": "Gruntfile.js",
+  "repository": "https://github.com/Rudloff/mwpackagist.git",
+  "resolutions": {
+    "grunt-fixpack/fixpack/rc": "^1.2.8"
+  }
 }
