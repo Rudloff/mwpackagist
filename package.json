@@ -23,5 +23,8 @@
   ],
   "license": "GPL-3.0",
   "main": "Gruntfile.js",
-  "repository": "https://github.com/Rudloff/mwpackagist.git"
+  "repository": "https://github.com/Rudloff/mwpackagist.git",
+  "resolutions": {
+    "grunt-fixpack/fixpack/rc": "^1.2.8"
+  }
 }
