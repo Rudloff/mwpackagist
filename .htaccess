@@ -8,4 +8,4 @@ Header set X-Frame-Options DENY
 Header set X-Content-Type-Options nosniff
 Header set X-XSS-Protection "1; mode=block"
 Header set Content-Security-Policy "default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"
-Header set Referrer-Policy strict-origin
+Header set Referrer-Policy no-referrer
