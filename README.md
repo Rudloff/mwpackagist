@@ -8,6 +8,6 @@ This repository contains tools used to build the Composer repository.
 
 ```bash
 composer install
-composer buil
+composer build
 yarn install
 ```
