@@ -2,6 +2,7 @@
   "name": "rudloff/mwpackagist",
   "description": "Install and manage MediaWiki extensions/skins with Composer",
   "license": "GPL-3.0-only",
+  "type": "project",
   "require": {
     "composer/satis": "^1.0"
   },
