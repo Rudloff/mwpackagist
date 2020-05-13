@@ -9,5 +9,5 @@ require_once __DIR__ . '/vendor/autoload.php';
 $app = new Application('MediaWiki Packagist build tool');
 $buildCommand = new BuildCommand();
 $app->add($buildCommand);
-$app->setDefaultCommand((string) $buildCommand->getName(), true);
+$app->setDefaultCommand((string)$buildCommand->getName(), true);
 $app->run();

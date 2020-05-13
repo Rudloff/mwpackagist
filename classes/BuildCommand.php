@@ -6,6 +6,7 @@
 
 namespace MWPackagist;
 
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,9 +42,10 @@ class BuildCommand extends Command
 
     /**
      * Execute the command.
-     * @param  InputInterface  $input  Input
-     * @param  OutputInterface $output Output
-     * @return null
+     * @param InputInterface $input Input
+     * @param OutputInterface $output Output
+     * @return void
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
