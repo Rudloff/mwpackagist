@@ -1,4 +1,12 @@
 /*jslint node: true*/
+
+/**
+ * Initialize Grunt config.
+ * @param {Object} grunt
+ * @param {Function} grunt.initConfig
+ * @param {Function} grunt.loadNpmTasks
+ * @param {Function} grunt.registerTask
+ */
 module.exports = function (grunt) {
     'use strict';
 
