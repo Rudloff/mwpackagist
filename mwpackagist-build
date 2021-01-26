@@ -10,4 +10,8 @@ $app = new Application('MediaWiki Packagist build tool');
 $buildCommand = new BuildCommand();
 $app->add($buildCommand);
 $app->setDefaultCommand((string)$buildCommand->getName(), true);
-$app->run();
+try {
+    $app->run();
+} catch (Exception $e) {
+    echo 'Error: ' . $e->getMessage() . PHP_EOL;
+}
