@@ -57,7 +57,7 @@ class Repository
      * @return MediawikiPackage[] Packages
      * @throws Exception
      */
-    private function getPackages(array $subset, $range, $type)
+    private function getPackages(array $subset, string $range, string $type): array
     {
         $params = [
             'action' => 'query',
@@ -112,7 +112,7 @@ class Repository
      * @return MediawikiPackage[] Packages
      * @throws Exception
      */
-    private function getAllPackagesFromType(array $packages, $type)
+    private function getAllPackagesFromType(array $packages, string $type): array
     {
         $packagesNb = count($packages);
 
@@ -132,7 +132,7 @@ class Repository
      * @return MediawikiPackage[] Packages
      * @throws Exception
      */
-    public function getAllPackages()
+    public function getAllPackages(): array
     {
         $packages = [];
 
