@@ -44,10 +44,10 @@ class BuildCommand extends Command
      * Execute the command.
      * @param InputInterface $input Input
      * @param OutputInterface $output Output
-     * @return void
+     * @return int|null
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $helperSet = $this->getHelperSet();
         if (isset($helperSet)) {
@@ -96,5 +96,7 @@ class BuildCommand extends Command
         $web = new WebBuilder($output, $rootDir . '/repo/', [], false);
         $web->setRootPackage($rootPackage);
         $web->dump($packages);
+
+        return null;
     }
 }
