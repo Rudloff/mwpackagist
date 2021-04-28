@@ -19,11 +19,11 @@ class MediawikiPackage extends CompletePackage
      * Convert MediaWiki version string to semantic versioning.
      *
      * @param string $version Version string to convert
-     * @param string $hash    Git commit hash
+     * @param string $hash Git commit hash
      *
      * @return string Semantic version
      */
-    private static function convertVersion($version, $hash = null)
+    private static function convertVersion(string $version, $hash = null): string
     {
         if ($version == 'master') {
             return 'dev-master';
@@ -41,15 +41,21 @@ class MediawikiPackage extends CompletePackage
 
     /**
      * MediawikiPackage constructor.
-     * @param string $name      Package name
-     * @param string $type      "extension" or "skin"
-     * @param string $version   Version string
-     * @param string $hash      Git commit hash
-     * @param string $url       Download URL
+     * @param string $name Package name
+     * @param string $type "extension" or "skin"
+     * @param string $version Version string
+     * @param string $hash Git commit hash
+     * @param string $url Download URL
      * @param string $sourceUrl VCS URL
      */
-    public function __construct($name, $type, $version, $hash, $url, $sourceUrl)
-    {
+    public function __construct(
+        string $name,
+        string $type,
+        string $version,
+        string $hash,
+        string $url,
+        string $sourceUrl
+    ) {
         $parser = new VersionParser();
 
         $fullVersion = self::convertVersion($version, $hash);

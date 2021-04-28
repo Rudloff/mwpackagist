@@ -1,31 +1,36 @@
 <!DOCTYPE HTML>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>MediaWiki Packagist</title>
-        <link rel="stylesheet" href="node_modules/furtive/css/furtive.min.css" />
-        <link rel="canonical" href="https://mwpackagist.netlib.re/" />
-        <meta name="description" content="Install and manage MediaWiki extensions/skins with Composer" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body class="p1 bg--white measure">
-        <h1>MediaWiki Packagist</h1>
-        <p>This site mirrors the MediaWiki extension and skin directories as a Composer repository.</p>
+<head>
+    <meta charset="UTF-8"/>
+    <title>MediaWiki Packagist</title>
+    <link rel="stylesheet" href="node_modules/furtive/css/furtive.min.css"/>
+    <link rel="canonical" href="https://mwpackagist.netlib.re/"/>
+    <meta name="description" content="Install and manage MediaWiki extensions/skins with Composer"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="p1 bg--white measure">
+<h1>MediaWiki Packagist</h1>
+<p>This site mirrors the MediaWiki extension and skin directories as a Composer repository.</p>
 
-        <h2>How do I use it?</h2>
-        <ol>
-            <li>Add the repository to your <code>composer.json</code></li>
-            <li>Add the desired extensions and skins to your requirements using <code>mediawiki</code> as the vendor name.</li>
-            <li>Run <code>composer update</code></li>
-            <li>Packages are installed to <code>extensions/</code> or <code>skins/</code></li>
-        </ol>
-        <p>If you need a base setup to install the MediaWiki core with Composer, you can clone <a target="_blank" title="Base Composer setup for MediaWiki projects" href="https://github.com/Rudloff/mediawiki-composer">this repository</a>.</p>
+<h2>How do I use it?</h2>
+<ol>
+    <li>Add the repository to your <code>composer.json</code></li>
+    <li>Add the desired extensions and skins to your requirements using <code>mediawiki</code> as the vendor name.</li>
+    <li>Run <code>composer update</code></li>
+    <li>Packages are installed to <code>extensions/</code> or <code>skins/</code></li>
+</ol>
+<p>If you need a base setup to install the MediaWiki core with Composer, you can clone <a target="_blank"
+                                                                                          title="Base Composer setup for MediaWiki projects"
+                                                                                          href="https://github.com/Rudloff/mediawiki-composer">this
+    repository</a>.</p>
 
-        <h2>Versions</h2>
-        MediaWiki extensions usually provide a branch for each of the maintained MediaWiki version. We convert these branches into a semantic version number.</br>So you need to use your current MediaWiki version (e.g. <i>1.26</i>) as version constraint for your extensions in your <code>composer.json</code>.
+<h2>Versions</h2>
+MediaWiki extensions usually provide a branch for each of the maintained MediaWiki version. We convert these branches
+into a semantic version number.<br/>So you need to use your current MediaWiki version (e.g. <i>1.26</i>) as version
+constraint for your extensions in your <code>composer.json</code>.
 
-        <h2>Example</h2>
-        <pre>
+<h2>Example</h2>
+<pre>
 {
 	"name": "acme/mediawiki-example",
 	"description": "My MediaWiki site",
@@ -41,10 +46,11 @@
 }
         </pre>
 
-        <h2>Available extensions</h2>
-        You can find the list of all the available extensions (and their versions) <a href="repo/">here</a>.
+<h2>Available extensions</h2>
+You can find the list of all the available extensions (and their versions) <a href="repo/">here</a>.
 
-        <h2>Contributing</h2>
-        You can get the code and report issues on <a target="_blank" href="https://github.com/Rudloff/mwpackagist" title="MediaWiki Packagist on GitHub">GitHub</a>.
-    </body>
+<h2>Contributing</h2>
+You can get the code and report issues on <a target="_blank" href="https://github.com/Rudloff/mwpackagist"
+                                             title="MediaWiki Packagist on GitHub">GitHub</a>.
+</body>
 </html>

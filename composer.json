@@ -10,7 +10,8 @@
     "squizlabs/php_codesniffer": "^3.5",
     "roave/security-advisories": "dev-master",
     "symfony/var-dumper": "^3.4",
-    "phpstan/phpstan": "^0.9.2"
+    "phpstan/phpstan": "^0.12.69",
+    "enlightn/security-checker": "^1.8"
   },
   "autoload": {
     "psr-4": {
@@ -20,7 +21,7 @@
   "config": {
     "process-timeout": 0,
     "platform": {
-      "php": "7.0.33"
+      "php": "7.3"
     }
   },
   "bin": [

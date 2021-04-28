@@ -51,12 +51,13 @@ class Repository
      * Get packages from MediaWiki's extension repository.
      *
      * @param string[] $subset List of package names to get
-     * @param string   $range  Request range used to split requests in several parts (xx-yy)
-     * @param string   $type   "extension" or "skin"
+     * @param string $range Request range used to split requests in several parts (xx-yy)
+     * @param string $type "extension" or "skin"
      *
      * @return MediawikiPackage[] Packages
+     * @throws Exception
      */
-    private function getPackages(array $subset, $range, $type)
+    private function getPackages(array $subset, string $range, string $type): array
     {
         $params = [
             'action' => 'query',
@@ -73,8 +74,8 @@ class Repository
         }
 
         $extInfo = JsonFile::parseJson(
-            (string) $this->rfs->getContents(
-                (string) parse_url($this->apiUrl, PHP_URL_HOST),
+            (string)$this->rfs->getContents(
+                (string)parse_url($this->apiUrl, PHP_URL_HOST),
                 $this->apiUrl . '?' . http_build_query($params),
                 false
             )
@@ -82,8 +83,6 @@ class Repository
 
         $packages = [];
         foreach ($subset as $name) {
-            $composerName = 'mediawiki/' . $name;
-
             $list = $extInfo['query']['extdistbranches'][$type . 's'];
 
             foreach ($list[$name] as $version => $url) {
@@ -108,11 +107,12 @@ class Repository
      * Get all extensions or skins.
      *
      * @param string[] $packages List of package names to get
-     * @param string   $type     "skin" or "extension"
+     * @param string $type "skin" or "extension"
      *
      * @return MediawikiPackage[] Packages
+     * @throws Exception
      */
-    private function getAllPackagesFromType(array $packages, $type)
+    private function getAllPackagesFromType(array $packages, string $type): array
     {
         $packagesNb = count($packages);
 
@@ -130,16 +130,17 @@ class Repository
      * Fetch all packages.
      *
      * @return MediawikiPackage[] Packages
+     * @throws Exception
      */
-    public function getAllPackages()
+    public function getAllPackages(): array
     {
         $packages = [];
 
         $json = JsonFile::parseJson(
-            (string) $this->rfs->getContents(
-                (string) parse_url($this->apiUrl, PHP_URL_HOST),
+            (string)$this->rfs->getContents(
+                (string)parse_url($this->apiUrl, PHP_URL_HOST),
                 $this->apiUrl . '?' .
-                    http_build_query(['action' => 'query', 'list' => 'extdistrepos', 'format' => 'json']),
+                http_build_query(['action' => 'query', 'list' => 'extdistrepos', 'format' => 'json']),
                 false
             )
         );
