@@ -1,7 +1,7 @@
 {
   "name": "mwpackagist",
   "description": "Install and manage MediaWiki extensions/skins with Composer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Pierre Rudloff",
   "bugs": "https://github.com/Rudloff/mwpackagist/issues",
   "dependencies": {
