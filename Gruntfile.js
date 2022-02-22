@@ -12,7 +12,6 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-jslint');
     grunt.loadNpmTasks('grunt-phpcs');
-    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-fixpack');
     grunt.loadNpmTasks('grunt-phpdocumentor');
     grunt.loadNpmTasks('grunt-phpstan');
@@ -30,14 +29,6 @@ module.exports = function (grunt) {
             },
             php: {
                 src: ['mwpackagist-build', 'classes/*.php']
-            }
-        },
-        jsonlint: {
-            manifests: {
-                src: ['*.json', '*.webapp'],
-                options: {
-                    format: true
-                }
             }
         },
         fixpack: {
@@ -63,6 +54,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('lint', ['jslint', 'fixpack', 'jsonlint', 'phpcs', 'phpstan']);
+    grunt.registerTask('lint', ['jslint', 'fixpack', 'phpcs', 'phpstan']);
     grunt.registerTask('doc', ['phpdocumentor']);
 };
