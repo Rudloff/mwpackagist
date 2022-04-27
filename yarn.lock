@@ -276,19 +276,7 @@ getobject@~1.0.0:
   resolved "https://registry.yarnpkg.com/getobject/-/getobject-1.0.2.tgz#25ec87a50370f6dcc3c6ba7ef43c4c16215c4c89"
   integrity sha512-2zblDBaFcb3rB4rF77XVnuINOE2h2k/OnqXAiy0IrTxUfV1iFp3la33oAQVY9pCpWU268WFYVt2t71hlMuLsOg==
 
-glob@^7.0.3:
-  version "7.1.6"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
-  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.0.4"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
-glob@^7.1.3:
+glob@^7.0.3, glob@^7.1.3:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
   integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
@@ -343,7 +331,7 @@ global-prefix@^1.0.1:
     is-windows "^1.0.1"
     which "^1.2.14"
 
-grunt-cli@~1.4.2:
+grunt-cli@~1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/grunt-cli/-/grunt-cli-1.4.3.tgz#22c9f1a3d2780bf9b0d206e832e40f8f499175ff"
   integrity sha512-9Dtx/AhVeB4LYzsViCjUQkd0Kw0McN2gYpdmGYKtE2a5Yt7v1Q+HYZVWhqXc/kGnxlMtqKDxSwotiGeFmkrCoQ==
@@ -414,17 +402,17 @@ grunt-phpstan@^0.2.0:
   resolved "https://registry.yarnpkg.com/grunt-phpstan/-/grunt-phpstan-0.2.1.tgz#c3c37b58851bec3ed66687f03d52d6a5d0254aa9"
   integrity sha512-HpDd1NpzuqZS6pOSivV16hc9+c5CFwQr8G7Hvmk6k6OGqDvS+ZVnRL+leqAq26SItoyPjjAqoKyoWnouLp6FVQ==
 
-grunt@^1.0.4:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/grunt/-/grunt-1.4.1.tgz#7d1e17db1f9c8108777f7273d6b9359755576f50"
-  integrity sha512-ZXIYXTsAVrA7sM+jZxjQdrBOAg7DyMUplOMhTaspMRExei+fD0BTwdWXnn0W5SXqhb/Q/nlkzXclSi3IH55PIA==
+grunt@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/grunt/-/grunt-1.5.2.tgz#46b014e28d17c85baac19d5e891bb3f04923c098"
+  integrity sha512-XCtfaIu72OyDqK24MjWiGC9SwlkuhkS1mrULr1xzuJ2XqAFhP3ZAchZGHJeSCY6mkaOXU4F7SbmmCF7xIVoC9w==
   dependencies:
     dateformat "~3.0.3"
     eventemitter2 "~0.4.13"
     exit "~0.1.2"
     findup-sync "~0.3.0"
     glob "~7.1.6"
-    grunt-cli "~1.4.2"
+    grunt-cli "~1.4.3"
     grunt-known-options "~2.0.0"
     grunt-legacy-log "~3.0.0"
     grunt-legacy-util "~2.0.1"
